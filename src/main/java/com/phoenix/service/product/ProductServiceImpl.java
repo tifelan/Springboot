@@ -8,10 +8,12 @@ import com.github.fge.jsonpatch.JsonPatchException;
 import com.phoenix.data.dto.ProductDto;
 import com.phoenix.data.models.Product;
 import com.phoenix.data.repository.ProductRepository;
+import com.phoenix.service.cloud.CloudService;
 import com.phoenix.web.exceptions.BusinessLogicException;
 import com.phoenix.web.exceptions.ProductDoesNotExistException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +25,12 @@ public class ProductServiceImpl implements ProductService{
 
     @Autowired
     ProductRepository productRepository;
+
+    @Autowired
+    @Qualifier("cloudinary-service")
+    CloudService cloudService;
+
+
     @Override
     public List<Product> getAllProducts() {
         return productRepository.findAll();
@@ -53,6 +61,7 @@ public class ProductServiceImpl implements ProductService{
             throw new BusinessLogicException("Product with name" + productDto.getName() +
                     " already exists");
         }
+
 
         Product product = new Product();
         product.setName(productDto.getName());
