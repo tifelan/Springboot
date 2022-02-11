@@ -7,6 +7,7 @@ import com.phoenix.web.exceptions.BusinessLogicException;
 import com.phoenix.web.exceptions.ProductDoesNotExistException;
 import org.springframework.data.web.JsonPath;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface ProductService {

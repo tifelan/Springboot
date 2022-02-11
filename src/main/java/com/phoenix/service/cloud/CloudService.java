@@ -8,7 +8,6 @@ import java.util.Map;
 
 public interface CloudService {
 
-    Map<?,?> upload(File file, Map<?,?> params) throws IOException;
-    Map<?,?> upload(MultipartFile file, Map<?,?> params) throws IOException;
+    Map<?,?> upload(byte[] bytes, Map<?,?> params) throws IOException;
 
 }

@@ -8,13 +8,11 @@ import java.io.IOException;
 import java.util.Map;
 @Service("aws")
 public class AwsServiceImpl implements CloudService{
+
     @Override
-    public Map<?, ?> upload(File file, Map<?, ?> params) {
+    public Map<?, ?> upload(byte[] file, Map<?, ?> params) {
         return null;
     }
 
-    @Override
-    public Map<?, ?> upload(MultipartFile file, Map<?, ?> params) throws IOException {
-        return null;
-    }
+
 }

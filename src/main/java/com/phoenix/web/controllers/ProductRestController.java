@@ -12,10 +12,14 @@ import com.phoenix.service.product.ProductService;
 import com.phoenix.web.exceptions.BusinessLogicException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.print.attribute.standard.Media;
 import java.util.List;
 
 @RestController
@@ -32,8 +36,9 @@ public class ProductRestController {
 
     }
 
-    @PostMapping()
-    public ResponseEntity<?> createProduct(@RequestBody ProductDto productDto){
+    @PostMapping(consumes = {"multipart/form-data"})
+    public ResponseEntity<?> createProduct(@ModelAttribute ProductDto productDto){
+
 
         try{
             Product savedProduct = productService.createProduct(productDto);

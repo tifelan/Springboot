@@ -1,5 +1,6 @@
 package com.phoenix.service.product;
 
+import com.cloudinary.utils.ObjectUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,7 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -62,8 +65,24 @@ public class ProductServiceImpl implements ProductService{
                     " already exists");
         }
 
-
+        log.info("Creating object --> {}", productDto);
         Product product = new Product();
+
+        try {
+            if(productDto.getImage() != null) {
+                log.info("image is not null");
+                Map<?, ?> uploadResult = cloudService.upload(
+                        productDto.getImage().getBytes(),
+                        ObjectUtils.asMap(
+                                "public_id",
+                                "inventory/" + productDto.getImage().getOriginalFilename(),
+                                "overwrite", true));
+                product.setImageUrl(uploadResult.get("url").toString());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         product.setName(productDto.getName());
         product.setPrice(productDto.getPrice());
         product.setQuantity(productDto.getQuantity());

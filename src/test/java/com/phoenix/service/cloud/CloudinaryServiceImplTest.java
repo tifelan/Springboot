@@ -46,9 +46,9 @@ class CloudinaryServiceImplTest {
 
     @Test
     void uploadToCloudinaryTest() throws IOException {
-        File file  = new File("src/test/resources/Screenshot (321).png");
-        assertThat(file.exists()).isTrue();
-        Map<?,?> uploadResult = cloudService.upload(file, ObjectUtils.emptyMap());
+        Path file  = Paths.get("src/test/resources/Screenshot (321).png");
+        assertThat(file.toFile().exists()).isTrue();
+        Map<?,?> uploadResult = cloudService.upload(Files.readAllBytes(file), ObjectUtils.emptyMap());
         log.info("Upload result to cloud --> {}", uploadResult);
         assertThat(uploadResult.get("url")).isNotNull();
     }
@@ -65,12 +65,12 @@ class CloudinaryServiceImplTest {
 
         assertThat(multipartFile).isNotNull();
         assertThat(multipartFile.isEmpty()).isFalse();
-        //store multipart to file
-        //convert multipart to file
-
         //upload to cloud
-        cloudService.upload(multipartFile, ObjectUtils.emptyMap());
-
+        Map<?,?> uploadResult = cloudService.upload(multipartFile.getBytes(),
+                ObjectUtils.asMap(
+                        "overwrite", true
+                ));
+        assertThat(uploadResult.get("url")).isNotNull();
     }
 
 
