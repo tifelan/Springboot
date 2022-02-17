@@ -64,10 +64,8 @@ public class ProductServiceImpl implements ProductService{
             throw new BusinessLogicException("Product with name" + productDto.getName() +
                     " already exists");
         }
-
         log.info("Creating object --> {}", productDto);
         Product product = new Product();
-
         try {
             if(productDto.getImage() != null) {
                 log.info("image is not null");
