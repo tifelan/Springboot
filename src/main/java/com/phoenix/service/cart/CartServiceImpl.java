@@ -12,12 +12,14 @@ import com.phoenix.data.repository.ProductRepository;
 import com.phoenix.web.exceptions.BusinessLogicException;
 import com.phoenix.web.exceptions.ProductDoesNotExistException;
 import com.phoenix.web.exceptions.UserNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class CartServiceImpl implements CartService {
 
 
@@ -56,18 +58,29 @@ public class CartServiceImpl implements CartService {
             throw new BusinessLogicException("Quantity too large");
         }
 
+        log.info("Cart Request dto --> {}", cartRequestDto);
         //add product to cart
-        Item cartItem = new Item(product, cartRequestDto.getQuantity());
-        myCart.addItem(cartItem);
-        //save cart
-        cartRepository.save(myCart);
+        Item cartItem = Item.builder()
+                .product(product)
+                .quantityAddedToCart(cartRequestDto.getQuantity()).build();
+        log.info("Item object --> {}", cartItem);
 
+        myCart.addItem(cartItem);
+        myCart.setTotalPrice(myCart.getTotalPrice() + calculateItemPrice(cartItem));
+        //save cart
+        myCart = cartRepository.save(myCart);
+        log.info("Cart object --> {}", myCart);
+
+        return buildCartResponse(myCart);
     }
 
-    private CartResponseDto buildCartReponse(Cart cart){
+    private Double calculateItemPrice(Item item){
+        return item.getProduct().getPrice() * item.getQuantityAddedToCart();
+    }
+    private CartResponseDto buildCartResponse(Cart cart){
         return CartResponseDto.builder()
                 .cartItems(cart.getItemList())
-                .totalPrice()
+                .totalPrice(cart.getTotalPrice())
                 .build();
     }
 

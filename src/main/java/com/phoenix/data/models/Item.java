@@ -1,14 +1,19 @@
 package com.phoenix.data.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
-import javax.annotation.processing.Generated;
 import javax.persistence.*;
 
 @Entity
 @Data
 @NoArgsConstructor
+@Slf4j
+@Builder
+@AllArgsConstructor
 public class Item {
 
     @Id
@@ -21,19 +26,4 @@ public class Item {
     private Integer quantityAddedToCart;
 
 
-    public Item(Product product, int quantityAddedToCart){
-        if(quantityAddedToCart <= product.getQuantity()){
-            this.quantityAddedToCart = quantityAddedToCart;
-        }
-        else{
-            this.quantityAddedToCart = 0;
-        }
-        this.product = product;
-    }
-
-    public void setQuantityAddedToCart(int quantityAddedToCart){
-        if(quantityAddedToCart <= product.getQuantity()){
-            this.quantityAddedToCart = quantityAddedToCart;
-        }
-    }
 }

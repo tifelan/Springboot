@@ -9,7 +9,7 @@ truncate table app_user;
 
 insert into product(id, name, price, quantity)
 values(12, 'Luxury Mop', 2340, 3),
-(13, 'Macbook Air', 18320, 4),
+(13, 'Macbook Air', 500, 4),
 (14, 'Rocking chair', 5340, 5),
 (15, 'Purple T-shirt', 7340, 7);
 
@@ -18,10 +18,10 @@ values(510, 14, 2),
 (511, 15, 3),
 (512, 12, 1);
 
-insert into cart(id)
-values(345),
-(355),
-(366);
+insert into cart(id, total_price)
+values(345, 0.0),
+(355, 0.0),
+(366, 0.0);
 
 insert into app_user(id, firstname, lastname, email, my_cart_id)
 values(5005, 'John', 'Badmus', 'john@myspace.com', 345),

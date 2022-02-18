@@ -37,9 +37,10 @@ class CartRepositoryTest {
                 .orElse(null);
         assertThat(product).isNotNull();
 
-        Item item = new Item(product, 2);
+        Item item = Item.builder().product(product).quantityAddedToCart(2).build();
 
         assertThat(item.getProduct()).isNotNull();
+        assertThat(item.getQuantityAddedToCart()).isEqualTo(2);
         Cart cart = new Cart();
         cart.addItem(item);
 
