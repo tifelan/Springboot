@@ -21,18 +21,21 @@ values(510, 14, 2),
 insert into cart(id, total_price)
 values(345, 0.0),
 (355, 0.0),
-(366, 0.0);
+(366, 0.0),
+(377, 0.0);
 
 insert into app_user(id, firstname, lastname, email, my_cart_id)
 values(5005, 'John', 'Badmus', 'john@myspace.com', 345),
 (5010, 'Chris', 'Tuck', 'chris@myspace.com',355),
 (5011, 'GoodNews', 'Confidence', 'goodconfidence@myspace.com', 366);
+(5012, 'GoodNews', 'Confidence', 'goodconfidence@myspace.com', 377);
+
 
 
 insert into cart_item_list(cart_id, item_list_id)
 values(345, 510),
-(345, 511),
-(345, 512);
+(366, 512),
+(355, 511);
 
 
 

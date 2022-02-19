@@ -63,4 +63,25 @@ class CartRepositoryTest {
         log.info("Cart Retrieved from DB :: {}", savedCart);
     }
 
+
+    @Test
+    @DisplayName("Update an item in cart test")
+    void updateItemInCartTest(){
+
+        Cart savedCart = cartRepository.findById(355L).orElse(null);
+        assertThat(savedCart).isNotNull();
+        assertThat(savedCart.getItemList().size()).isEqualTo(1);
+        assertThat(savedCart.getItemList().get(0).getQuantityAddedToCart()).isEqualTo(3);
+
+        Item item = savedCart.getItemList().get(0);
+        item.setQuantityAddedToCart(5);
+
+        cartRepository.save(savedCart);
+
+        assertThat(savedCart.getItemList().get(0).getQuantityAddedToCart()).isEqualTo(5);
+
+
+
+
+    }
 }

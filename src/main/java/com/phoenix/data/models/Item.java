@@ -25,5 +25,10 @@ public class Item {
 
     private Integer quantityAddedToCart;
 
-
+    public void setQuantityAddedToCart(Integer quantityAddedToCart) {
+        if(product.getQuantity() >= quantityAddedToCart)
+            this.quantityAddedToCart = quantityAddedToCart;
+        else
+            this.quantityAddedToCart = 0;
+    }
 }
